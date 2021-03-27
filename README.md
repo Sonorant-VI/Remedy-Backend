@@ -19,6 +19,7 @@ Connecting VS Code to the remote database
     <th>Operation</th>
 </tr>
 
+
 <tr>
     <td>auth/login</td>
     <td>POST</td>
