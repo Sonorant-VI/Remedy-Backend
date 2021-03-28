@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
-      hashed_pass: {
+      hashedpass: {
         type: Sequelize.STRING,
         allowNull: true
       },
@@ -21,9 +21,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       }
-    },{
-      tableName:'remedy.gc.user'
-  });
-    User.schema('remedy');
+  },{
+      tableName:"gc_user",
+      schema:"remedy"
+    });
     return User;
   };

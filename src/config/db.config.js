@@ -3,6 +3,7 @@ module.exports = {
     USER: "hrwbzlut",
     PASSWORD: "wny5zJJUYOo-J4npgllI6Ay2mRB8_x7q",
     DB: "hrwbzlut",
+    schema: "remedy",
     dialect: "postgres",
     pool: {
       max: 5,
