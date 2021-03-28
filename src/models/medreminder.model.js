@@ -26,7 +26,8 @@ module.exports = (sequelize, Sequelize) => {
         type: 'BIT'
       },
       reminder_msg: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        defaultValue: 'You need to take medication soon...'
       },
       patient_id: {
         type: Sequelize.INTEGER
