@@ -12,6 +12,7 @@ exports.create = (req, res) => {
     }
     const user = {
         email: req.body.email,
+        hashedpass: req.body.hashedpass,
         salt: req.body.salt,
         role: req.body.role,
     };

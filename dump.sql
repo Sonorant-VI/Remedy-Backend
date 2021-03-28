@@ -61,9 +61,11 @@ CREATE TABLE remedy.gc_medreminder (
 CREATE TABLE remedy.gc_user (
                                 uid SERIAL NOT NULL,
                                 email character varying(50) NOT NULL,
-                                hashed_pass character varying(50) NOT NULL,
+                                hashedpass character varying(50) NOT NULL,
                                 salt character varying(50) NOT NULL,
-                                role character varying(50) NOT NULL
+                                role character varying(50) NOT NULL,
+                                createdAt timestamp without time zone NOT NULL,
+                                updatedAt timestamp without time zone NOT NULL
 );
 
 

@@ -2,6 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
       uid: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
       }, 
       email: {
@@ -20,7 +21,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       }
-    });
-  
+    },{
+      tableName:'remedy.gc.user'
+  });
+    User.schema('remedy');
     return User;
   };
