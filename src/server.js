@@ -6,6 +6,9 @@ const server = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost";
 
+const db = require("./src/models");
+db.sequelize.sync();
+
 //----------------------------------------------------------------------------------------------------------------------
 
 
@@ -33,7 +36,6 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 
 const path = require('path');
-const { sequelize } = require('./models');
 // Server static files from the Vue frontend app
 server.use(express.static(path.join(__dirname, '/dist')));
 
