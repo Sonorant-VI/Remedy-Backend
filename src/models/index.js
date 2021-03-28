@@ -23,6 +23,7 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.linked = require("./linked.model.js")(sequelize, Sequelize);
 db.appreminder = require("./appreminder.model.js")(sequelize, Sequelize);
 db.medreminder = require("./medreminder.model.js")(sequelize, Sequelize);
+db.token = require("./token.model.js")(sequelize, Sequelize);
 
 // checking the contents of db array
 // console.log(db);
