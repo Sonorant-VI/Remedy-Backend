@@ -2,9 +2,11 @@ const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const passport = require('passport');
+const db = require("./src/models");
 const server = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost";
+
 //----------------------------------------------------------------------------------------------------------------------
 
 
@@ -19,6 +21,11 @@ server.use(bodyParser.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 server.use(bodyParser.urlencoded({ extended: true }));
+
+// syncing the model with the database
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db.");
+  });
 
 //----------------------------------------------------------------------------------------------------------------------
 
