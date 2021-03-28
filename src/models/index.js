@@ -19,12 +19,12 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require("./user.model.js")(sequelize, Sequelize);
+db.user = require("./user.model.js")(sequelize, Sequelize);
 db.linked = require("./linked.model.js")(sequelize, Sequelize);
 db.appreminder = require("./appreminder.model.js")(sequelize, Sequelize);
 db.medreminder = require("./medreminder.model.js")(sequelize, Sequelize);
 
 // checking the contents of db array
-console.log(db);
+// console.log(db);
 
 module.exports = db;
