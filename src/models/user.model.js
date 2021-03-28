@@ -8,9 +8,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       },
-      hashedPass: {
+      hashed_pass: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       salt: {
         type: Sequelize.STRING,

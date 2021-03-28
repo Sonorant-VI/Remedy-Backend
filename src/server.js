@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -5,6 +6,7 @@ const passport = require('passport');
 const server = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost";
+
 
 const db = require("../src/models");
 db.sequelize.sync();
@@ -45,7 +47,7 @@ server.get("/", (req, res) => {
     res.json({ message: "Server is running!" });
 });
 
-
+require("./routes/server.routes")(server);
 /**
  * Start server
  */

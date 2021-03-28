@@ -1,0 +1,11 @@
+POST {{baseUrl}}/api/users/
+Content-Type: application/json
+
+{
+  "email": "hello@gmail.com",
+  "salt": "ok",
+  "role": "user"
+}
+
+###
+
