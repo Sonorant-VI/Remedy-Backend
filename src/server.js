@@ -6,7 +6,7 @@ const server = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost";
 
-const db = require("./src/models");
+const db = require("../src/models");
 db.sequelize.sync();
 
 //----------------------------------------------------------------------------------------------------------------------
