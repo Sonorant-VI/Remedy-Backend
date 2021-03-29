@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
         allowNull: false
       }
+    },{
+      tableName:"gc_linked",
+      schema:"remedy"
     });
   
     return Linked;
