@@ -1,22 +1,26 @@
 const db = require("../models");
-const User = db.user;
+const MedReminder = db.medreminder;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new User
+// Create and Save a new MedReminder
 exports.create = (req, res) => {
-    if (!req.body.email) {
+    if (!req.body.time) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
         return;
     }
-    const user = {
-        email: req.body.email,
-        hashedpass: req.body.hashedpass,
-        salt: req.body.salt,
-        role: req.body.role,
+
+    const medReminder = {
+        time: req.body.time,
+        timeout: req.body.timeout,
+        brandName: req.body.brandName,
+        genericName:req.body.genericName,
+        verified:req.body.verified,
+        reminderMsg:req.body.reminderMsg
     };
-    User.create(user)
+
+    MedReminder.create(medReminder)
         .then(data => {
             res.send(data);
         })
@@ -27,7 +31,5 @@ exports.create = (req, res) => {
             });
         });
 };
-
-
 
 

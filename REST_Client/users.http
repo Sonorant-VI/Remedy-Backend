@@ -1,4 +1,4 @@
-POST {{baseUrl}}/api/users/
+POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
