@@ -37,6 +37,10 @@ server.use(bodyParser.urlencoded({ extended: true }));
 //require("./config/passport.js");
 
 
+//require("./routes/server.routes")(server);
+require("./routes/auth.routes")(server);
+
+
 const path = require('path');
 // Server static files from the Vue frontend app
 server.use(express.static(path.join(__dirname, '/dist')));
@@ -47,7 +51,6 @@ server.get("/", (req, res) => {
     res.json({ message: "Server is running!" });
 });
 
-require("./routes/server.routes")(server);
 /**
  * Start server
  */

@@ -10,7 +10,7 @@ module.exports = (sequelize, Sequelize) => {
         allowNull: false
       },
       hashedpass: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(512),
         allowNull: true
       },
       salt: {

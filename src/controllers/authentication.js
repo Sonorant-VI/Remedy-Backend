@@ -23,12 +23,17 @@ exports.register = (req, res) => {
             message: "Field too long."
         });
     }
+    // TODO: validate user role
 
     // Create a new user
     User.create({
-        username: req.body.username,
-        email: bcrypt.hashSync(req.body.password, 8)
+        email: req.body.email,
+        hashedpass: bcrypt.hashSync(req.body.password, 8),
+        // TODO: remove
+        salt: "1",
+        role: req.body.role,
     })
+
         .then(data => {
             res.send(data);
         })
@@ -43,32 +48,33 @@ exports.register = (req, res) => {
 
 // Login to user account
 exports.login = (req, res) => {
-
+    console.log("We're inside login")
     // Validate request
     if (!req.body.email|| !req.body.password) {
         return res.status(400).json({message : "All data required!"});
     }
 
-    User.findOne({where: {username: req.body.username}})
+    User.findOne({where: {email: req.body.email}})
         .then(user => {
             if (!user) {
                 return res.status(401).send({ message: "Invalid email or password." });
             }
 
-            let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+            let passwordIsValid = bcrypt.compareSync(req.body.password, user.hashedpass);
 
             if (!passwordIsValid) {
                 return res.status(401).send({message: "Invalid email or password."});
             }
 
-            let jwt = jwt.sign({ id: user.id }, config.secret, {
+            let token = jwt.sign({ id: user.uid }, config.secret, {
                 expiresIn: 86400 // 24 hours
             });
 
+            // Save JWT to whitelist
             res.status(200).send({
-                id: user.id,
+                id: user.uid,
                 email: user.email,
-                jwt: jwt
+                jwt: token
             });
 
         })
@@ -82,10 +88,7 @@ exports.login = (req, res) => {
 
 // invalidates JWT from whitelist
 exports.logout = (req, res) => {
-
-    // TODO: delete expired tokens
-    //const deleteTokens = require('../CRON/clearExpiredTokens')
-    //deleteTokens.deleteExpiredTokens();
+    // TODO: invalidate token?
 
     Token.destroy({where: {'token': req.headers["x-access-token"]}})
         .then(token => {

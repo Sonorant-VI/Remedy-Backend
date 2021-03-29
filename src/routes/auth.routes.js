@@ -1,7 +1,7 @@
 const router = require("express").Router();
-const registerCheck = require("../middlewares/registerCheck")
+const registerCheck = require("../middleware/registerCheck")
 const authenticationController = require("../controllers/authentication");
-const authJWT = require("../middlewares/authJWT");
+const authJWT = require("../middleware/authJWT");
 
 
 module.exports = authenticationRouter => {
