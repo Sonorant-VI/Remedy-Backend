@@ -1,3 +1,4 @@
+
 const express = require('express');
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -5,6 +6,10 @@ const passport = require('passport');
 const server = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost";
+
+
+const db = require("../src/models");
+db.sequelize.sync();
 
 //----------------------------------------------------------------------------------------------------------------------
 
@@ -33,7 +38,6 @@ server.use(bodyParser.urlencoded({ extended: true }));
 
 
 const path = require('path');
-const { sequelize } = require('./models');
 // Server static files from the Vue frontend app
 server.use(express.static(path.join(__dirname, '/dist')));
 
@@ -43,7 +47,7 @@ server.get("/", (req, res) => {
     res.json({ message: "Server is running!" });
 });
 
-
+require("./routes/server.routes")(server);
 /**
  * Start server
  */

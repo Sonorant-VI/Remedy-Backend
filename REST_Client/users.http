@@ -1,0 +1,12 @@
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "hello@gmail.com",
+  "hashedpass": "ok",
+  "salt": "ok",
+  "role": "user"
+}
+
+###
+

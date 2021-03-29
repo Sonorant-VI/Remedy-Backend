@@ -34,7 +34,10 @@ module.exports = (sequelize, Sequelize) => {
       patient_id: {
         type: Sequelize.INTEGER
       }
+    },{
+      tableName:"gc_appreminder",
+      schema:"remedy"
     });
-  
+
     return AppReminder;
   };

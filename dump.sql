@@ -21,8 +21,10 @@ CREATE TABLE remedy.gc_appreminder (
                                        timeout integer NOT NULL,
                                        purpose character varying(50),
                                        cancelled bit(1),
-                                       reminder_msg character varying(50),
-                                       patient_id integer
+                                       reminderMsg character varying(50),
+                                       patientId integer,
+                                       createdAt timestamp without time zone NOT NULL,
+                                       updatedAt timestamp without time zone NOT NULL
 );
 
 
@@ -32,8 +34,10 @@ CREATE TABLE remedy.gc_appreminder (
 --
 
 CREATE TABLE remedy.gc_linked (
-                                  uid_linked integer NOT NULL,
-                                  uid_linker integer NOT NULL
+                                  uidLinked integer NOT NULL,
+                                  uidLinker integer NOT NULL,
+                                  createdAt timestamp without time zone NOT NULL,
+                                  updatedAt timestamp without time zone NOT NULL
 );
 
 
@@ -45,11 +49,13 @@ CREATE TABLE remedy.gc_medreminder (
                                        id SERIAL NOT NULL,
                                        "time" timestamp without time zone NOT NULL,
                                        timeout integer NOT NULL,
-                                       brand_name character varying(50) NOT NULL,
-                                       generic_name character varying(50) NOT NULL,
+                                       brandName character varying(50) NOT NULL,
+                                       genericName character varying(50) NOT NULL,
                                        verified bit(1),
-                                       reminder_msg character varying(50),
-                                       patient_id integer
+                                       reminderMsg character varying(50),
+                                       patientId integer,
+                                       createdAt timestamp without time zone NOT NULL,
+                                       updatedAt timestamp without time zone NOT NULL
 );
 
 
@@ -61,9 +67,11 @@ CREATE TABLE remedy.gc_medreminder (
 CREATE TABLE remedy.gc_user (
                                 uid SERIAL NOT NULL,
                                 email character varying(50) NOT NULL,
-                                hashed_pass character varying(50) NOT NULL,
+                                hashedpass character varying(50) NOT NULL,
                                 salt character varying(50) NOT NULL,
-                                role character varying(50) NOT NULL
+                                role character varying(50) NOT NULL,
+                                createdAt timestamp without time zone NOT NULL,
+                                updatedAt timestamp without time zone NOT NULL
 );
 
 
@@ -81,7 +89,7 @@ ALTER TABLE ONLY remedy.gc_appreminder
 --
 
 ALTER TABLE ONLY remedy.gc_linked
-    ADD CONSTRAINT gc_linked_pkey PRIMARY KEY (uid_linked, uid_linker);
+    ADD CONSTRAINT gc_linked_pkey PRIMARY KEY (uidLinked, uidLinker);
 
 
 --
@@ -105,7 +113,7 @@ ALTER TABLE ONLY remedy.gc_user
 --
 
 ALTER TABLE ONLY remedy.gc_linked
-    ADD CONSTRAINT fk_linked FOREIGN KEY (uid_linked) REFERENCES remedy.gc_user(uid);
+    ADD CONSTRAINT fk_linked FOREIGN KEY (uidLinked) REFERENCES remedy.gc_user(uid);
 
 
 --
@@ -113,7 +121,7 @@ ALTER TABLE ONLY remedy.gc_linked
 --
 
 ALTER TABLE ONLY remedy.gc_linked
-    ADD CONSTRAINT fk_linker FOREIGN KEY (uid_linker) REFERENCES remedy.gc_user(uid);
+    ADD CONSTRAINT fk_linker FOREIGN KEY (uidLinker) REFERENCES remedy.gc_user(uid);
 
 
 --
@@ -121,7 +129,7 @@ ALTER TABLE ONLY remedy.gc_linked
 --
 
 ALTER TABLE ONLY remedy.gc_medreminder
-    ADD CONSTRAINT fk_patient FOREIGN KEY (patient_id) REFERENCES remedy.gc_user(uid) ON DELETE SET NULL;
+    ADD CONSTRAINT fk_patient FOREIGN KEY (patientId) REFERENCES remedy.gc_user(uid) ON DELETE SET NULL;
 
 
 --
@@ -129,7 +137,7 @@ ALTER TABLE ONLY remedy.gc_medreminder
 --
 
 ALTER TABLE ONLY remedy.gc_appreminder
-    ADD CONSTRAINT fk_patient FOREIGN KEY (patient_id) REFERENCES remedy.gc_user(uid) ON DELETE SET NULL;
+    ADD CONSTRAINT fk_patient FOREIGN KEY (patientId) REFERENCES remedy.gc_user(uid) ON DELETE SET NULL;
 
 
 --

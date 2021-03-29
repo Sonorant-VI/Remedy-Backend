@@ -2,15 +2,16 @@ module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
       uid: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true
       }, 
       email: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      hashedPass: {
+      hashedpass: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       salt: {
         type: Sequelize.STRING,
@@ -20,7 +21,9 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         allowNull: false
       }
+  },{
+      tableName:"gc_user",
+      schema:"remedy"
     });
-  
     return User;
   };
