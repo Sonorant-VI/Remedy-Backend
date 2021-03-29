@@ -1,6 +1,7 @@
 const db = require("../models");
-const appReminder = db.appreminder;
+const linked = db.linked;
 const Op = db.Sequelize.Op;
+
 
 exports.create = (req, res) => {
 
@@ -99,4 +100,3 @@ exports.delete = (req, res) => {
 
      */
 };
-
