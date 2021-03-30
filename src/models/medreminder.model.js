@@ -2,6 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const MedReminder = sequelize.define("medReminder", {
       id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false
       },  
@@ -14,22 +15,22 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      brand_name: {
+      brandName: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      generic_name: {
+      genericName: {
         type: Sequelize.STRING,
         allowNull: false
       },
       verified: {
         type: 'BIT'
       },
-      reminder_msg: {
+      reminderMsg: {
         type: Sequelize.STRING,
         defaultValue: 'You need to take medication soon...'
       },
-      patient_id: {
+      patientId: {
         type: Sequelize.INTEGER
       }
     },{

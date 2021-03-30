@@ -4,7 +4,8 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new MedReminder
 exports.create = (req, res) => {
-    if (!req.body.time) {
+    // console.log("Inside create reminder");
+    if (!req.body.time || !req.body.brandName || !req.body.genericName) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -17,9 +18,11 @@ exports.create = (req, res) => {
         brandName: req.body.brandName,
         genericName:req.body.genericName,
         verified:req.body.verified,
-        reminderMsg:req.body.reminderMsg
+        reminderMsg:req.body.reminderMsg,
+        patientId:req.body.patientId
     };
 
+    console.log("Contents of body have been stored");
     MedReminder.create(medReminder)
         .then(data => {
             res.send(data);
@@ -27,104 +30,98 @@ exports.create = (req, res) => {
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while creating the User."
+                    err.message || "Some error occurred while creating the reminder."
             });
         });
 };
+//-------------------------------------------------------------------------------------------------------------------
 
+// Return all the medication reminders for a single user
 exports.findAll = (req, res) => {
-    /*
-    TODO adapt this
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
+    console.log("Inside find all medication reminders");
+    const uid = req.params.uid;
 
-    Tutorial.findAll({ where: condition })
+    MedReminder.findAll({ where: {patientId: uid}})
         .then(data => {
-            res.send(data);
+            res.send(data).status(200);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving tutorials."
+                    err.message || "Some error occurred while retrieving reminders."
             });
         });
-
-     */
 };
+//-------------------------------------------------------------------------------------------------------------------
 
+// Return a single reminder for a specific user
 exports.findOne = (req, res) => {
-    /*
-    TODO adapt this
+    console.log("Inside find one reminder");
     const id = req.params.id;
+    const uid = req.params.uid;
 
-    Tutorial.findByPk(id)
+    MedReminder.findOne({where: {id: id, patientId: uid}})
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Tutorial with id=" + id
+                message: "Error retrieving Reminder with id=" + id
             });
         });
-
-     */
 };
+//-------------------------------------------------------------------------------------------------------------------
 
+
+// Update a medication reminder
 exports.update = (req, res) => {
-    /*
-    TODO adapt this
+    console.log("Inside update a single reminder");
     const id = req.params.id;
 
-    Tutorial.update(req.body, {
+    MedReminder.update(req.body, {
         where: { id: id }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Tutorial was updated successfully."
+                    message: "Reminder was updated successfully."
                 });
             } else {
                 res.send({
-                    message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
+                    message: `Cannot update Reminder with id=${id}. Maybe Tutorial was not found or req.body is empty!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error updating Tutorial with id=" + id
+                message: "Error updating Reminder with id=" + id
             });
         });
-
-     */
 };
+//-------------------------------------------------------------------------------------------------------------------
 
+// Removes a single medication reminder
 exports.delete = (req, res) => {
-    /*
-    TODO adapt this
+    console.log("Inside destroy medication reminder");
     const id = req.params.id;
 
-    Tutorial.destroy({
+    MedReminder.destroy({
         where: { id: id }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Tutorial was deleted successfully!"
+                    message: "Medication Reminder was deleted successfully!"
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+                    message: `Cannot delete Reminder with id=${id}. Maybe reminder was not found!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Tutorial with id=" + id
+                message: "Could not delete Reminder with id=" + id
             });
         });
-
-     */
 };
-
-
-

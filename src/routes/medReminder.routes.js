@@ -14,20 +14,20 @@ module.exports = medReminderRouter => {
     });
 
 
-    // return all the medReminders
-    router.get("medReminder/{userId}",/*TODO*/);
+    // return all the medReminders for a single user
+    router.get("/:uid", medReminderController.findAll);
 
     // return a single medReminder
-    router.get("medReminder/{userId}/{reminderId}",/*TODO*/);
+    router.get("/:uid/:id", medReminderController.findOne);
 
     // create a medReminder
-    router.post("medReminder/",/*TODO*/);
+    router.post("/", medReminderController.create);
 
     // update medReminder
-    router.patch("medReminder/{reminderId}",/*TODO*/);
+    router.patch("/:id", medReminderController.update);
 
     // remove medReminder
-    router.delete("medReminder/{reminderId}",/*TODO*/);
+    router.delete("/:id", medReminderController.delete);
 
     medReminderRouter.use('/api/medReminder', router);
 }
