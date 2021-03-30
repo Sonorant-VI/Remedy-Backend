@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const userController = require("../controllers/user.controller");
+const linkController = require("../controllers/link.controller");
 const authJWT = require("../middleware/authJWT");
 
 
@@ -15,25 +16,25 @@ module.exports = userRouter => {
 
 
     // Return all the users
-    router.get("/",/*TODO*/);
+    router.get("/",[authJWT.verifyTokenWhitelist],userController.findAll);
 
     // Return a single user
-    router.get("/:id",/*TODO*/);
+    router.get("/:id",[authJWT.verifyTokenWhitelist],userController.findOne);
 
     // remove single user
-    router.delete("/:id",/*TODO*/);
+    router.delete("/:id",[authJWT.verifyTokenWhitelist],userController.delete); /*TODO remove all reminder and link in the other table before*/
 
     // ask request
-    router.post("/link/request",/*TODO*/);
+    router.post("/link/request",[authJWT.verifyTokenWhitelist],linkController.create);
 
     // accept request
-    router.post("/link/validate",/*TODO*/);
+    router.patch("/link/validate",linkController.validate);
 
     // Return list of links => see read me
-    router.get("/link/list/:id",/*TODO*/);
+    router.get("/link/list/:id",linkController.findAll);
 
     // Remove the link
-    router.delete("/link/remove/:linkId",/*TODO*/);
+    router.delete("/link/remove",linkController.delete);
 
     userRouter.use('/api/user', router);
 }

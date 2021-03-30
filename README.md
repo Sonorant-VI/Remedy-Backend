@@ -90,7 +90,7 @@ Connecting VS Code to the remote database
 </tr>
 <tr>
     <td>user/link/validate</td>
-    <td>POST</td>
+    <td>PATCH</td>
     <td>Yes</td>
     <td>
         Accept or refuse a link request  return status code.
@@ -101,15 +101,15 @@ Connecting VS Code to the remote database
     <td>GET</td>
     <td>Yes</td>
     <td>
-        Return the list of all the link request where the user (id) is the receiver this table in the database has( id sender || id receiver || true OR false)  
+        Return the list of all the link request where the user (uid_linker) is the receiver this table in the database has( id sender || id receiver || true OR false)  
     </td>
 </tr>
 <tr>
-    <td>user/link/remove/{linkId}</td>
+    <td>user/link/remove</td>
     <td>DELETE</td>
     <td>Yes</td>
     <td>
-        Remove the link  indentified by (id) return status code. 
+        Remove the link <b>(put uid of the linker and the linked into the body's request)</b> return status code. 
     </td>
 </tr>
 </table>

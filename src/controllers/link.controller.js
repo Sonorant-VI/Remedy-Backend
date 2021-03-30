@@ -5,31 +5,104 @@ const Op = db.Sequelize.Op;
 
 exports.create = (req, res) => {
 
+    if (!req.body.uid_linked || !req.body.uid_linker) {
+        console.log("We're inside the link creater");
+        if (!req.body.uid_linked && !req.body.uid_linker) {
+            return res.status(400).json({message: "uid_linked and uid_linker is missing or is empty "});
+        } else if (!req.body.uid_linked) {
+            return res.status(400).json({message: "uid_linked is missing or is empty "});
+        } else if (!req.body.uid_linker) {
+            return res.status(400).json({message: "uid_linker is missing or is empty "});
+        }
+    }
+    linked.create({
+        uid_linked: req.body.uid_linked,
+        uid_linker: req.body.uid_linker,
+        verified: "false",
+    })
+        .then(data => {
+            res.send({
+                message: "link request sended now waiting to be verified"
+            });
+        })
+        .catch(error => {
+            res.status(500).send({
+                message: error.message || "An error occurred while creating new Link!"
+            });
+        });
+};
+
+exports.validate = (req, res) => {
+    if (req.body.verified == "true") {
+        linked.update(
+            {verified: "true"},
+            {
+                where: {
+                    uid_linked: req.body.uid_linked,
+                    uid_linker: req.body.uid_linker
+                }
+            }
+        ).then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "link accepted successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update link!`
+                });
+            }
+        }).catch(err => {
+            res.status(500).send({
+                message: "Error updating link"
+            });
+        });
+    } else {
+        linked.update(
+            {verified: "false"},
+            {
+                where: {
+                    uid_linked: req.body.uid_linked,
+                    uid_linker: req.body.uid_linker
+                }
+            }
+        ).then(num => {
+            if (num == 1) {
+                res.send({
+                    message: "link refused  successfully."
+                });
+            } else {
+                res.send({
+                    message: `Cannot update link!`
+                });
+            }
+        }).catch(err => {
+            res.status(500).send({
+                message: "Error updating link"
+            });
+        });
+
+    }
+    ;
 }
 
 exports.findAll = (req, res) => {
-    /*
-    TODO adapt this
-    const title = req.query.title;
-    var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
-
-    Tutorial.findAll({ where: condition })
+    const id = req.params.id;
+    linked.findAll({where: {uid_linker: id}})
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving tutorials."
+                    err.message || "Some error occurred while retrieving links."
             });
         });
-
-     */
 };
 
+
 exports.findOne = (req, res) => {
-    /*
-    TODO adapt this
+
     const id = req.params.id;
 
     Tutorial.findByPk(id)
@@ -41,62 +114,31 @@ exports.findOne = (req, res) => {
                 message: "Error retrieving Tutorial with id=" + id
             });
         });
-
-     */
 };
 
-exports.update = (req, res) => {
-    /*
-    TODO adapt this
-    const id = req.params.id;
-
-    Tutorial.update(req.body, {
-        where: { id: id }
-    })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "Tutorial was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error updating Tutorial with id=" + id
-            });
-        });
-
-     */
-};
 
 exports.delete = (req, res) => {
-    /*
-    TODO adapt this
-    const id = req.params.id;
 
-    Tutorial.destroy({
-        where: { id: id }
+    linked.destroy({
+        where: {
+            uid_linked: req.body.uid_linked,
+            uid_linker: req.body.uid_linker
+        }
     })
         .then(num => {
             if (num == 1) {
                 res.send({
-                    message: "Tutorial was deleted successfully!"
+                    message: "link was deleted successfully!"
                 });
             } else {
                 res.send({
-                    message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
+                    message: `Cannot delete link!`
                 });
             }
         })
         .catch(err => {
             res.status(500).send({
-                message: "Could not delete Tutorial with id=" + id
+                message: "Could not delete link"
             });
         });
-
-     */
 };

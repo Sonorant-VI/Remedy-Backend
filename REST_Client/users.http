@@ -1,12 +1,53 @@
+
+
+###
+GET {{baseUrl}}/api/user/
+Content-Type: application/json
+
+###
+GET {{baseUrl}}/api/user/1
+Content-Type: application/json
+
+###
 POST {{baseUrl}}/api/auth/register
 Content-Type: application/json
 
 {
   "email": "hello@gmail.com",
-  "hashedpass": "ok",
-  "salt": "ok",
-  "role": "user"
+  "password": "boo",
+  "role": "customer"
 }
 
 ###
+DELETE {{baseUrl}}/api/user/4
+Content-Type: application/json
 
+###
+
+POST {{baseUrl}}/api/user/link/request
+Content-Type: application/json
+
+{
+  "uid_linked": 1,
+  "uid_linker": 2
+}
+
+###
+PATCH {{baseUrl}}/api/user/link/validate
+Content-Type: application/json
+
+{
+  "uid_linked": 1,
+  "uid_linker": 2,
+  "verified": "false"
+}
+
+###
+DELETE {{baseUrl}}/api/user/link/remove
+Content-Type: application/json
+
+{
+  "uid_linked": 1,
+  "uid_linker": 2
+}
+###

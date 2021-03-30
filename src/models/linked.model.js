@@ -9,6 +9,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.INTEGER,
         primaryKey: true,
         allowNull: false
+      },
+      verified:{
+          type:Sequelize.BOOLEAN,
+          default: false,
+          allowNull: false
       }
     },{
       tableName:"gc_linked",

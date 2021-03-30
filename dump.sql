@@ -36,6 +36,7 @@ CREATE TABLE remedy.gc_appreminder (
 CREATE TABLE remedy.gc_linked (
                                   uidLinked integer NOT NULL,
                                   uidLinker integer NOT NULL,
+                                  verified  boolean NOT NULL ,
                                   createdAt timestamp without time zone NOT NULL,
                                   updatedAt timestamp without time zone NOT NULL
 );
