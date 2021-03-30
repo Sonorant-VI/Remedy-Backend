@@ -15,19 +15,19 @@ module.exports = appReminderRouter => {
 
 
     // return all the appReminder
-    router.get("/{userId}",/*TODO*/);
+    router.get("/:uid",appReminderController.findAll);
 
     // return single appReminder
-    router.get("/{userId}/{reminderId}",/*TODO*/);
+    router.get("/:uid/:id",appReminderController.findOne);
 
     // create an appReminder
-    router.post("/",/*TODO*/);
+    router.post("/",appReminderController.create);
 
     // update an appreminder
-    router.patch("/{reminderId}",/*TODO*/);
+    router.patch("/:id",appReminderController.update);
 
     // remove a reminderId
-    router.delete("/{reminderId}",/*TODO*/);
+    router.delete("/:id",appReminderController.delete);
 
     appReminderRouter.use('/api/appReminder', router);
 }
