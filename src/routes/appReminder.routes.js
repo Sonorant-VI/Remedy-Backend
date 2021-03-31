@@ -24,6 +24,7 @@ module.exports = appReminderRouter => {
     router.post("/",appReminderController.create);
 
     // update an appreminder
+    // TODO: fix
     router.patch("/:id",appReminderController.update);
 
     // remove a reminderId

@@ -76,6 +76,7 @@ exports.findOne = (req, res) => {
 
     console.log("Inside find one reminder");
     const id = req.params.id;
+    const uid = req.params.uid;
 
     AppReminder.findOne({where: {id: id, patientId: uid}})
         .then(data => {
@@ -107,6 +108,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
 
     console.log("Inside update a single reminder");
+
     const id = req.params.id;
     
     if (!req.body.start || !req.body.stop || !req.body.timeout || !req.body.reminder_msg ||!req.body.purpose || !req.body.patientId) {
@@ -130,7 +132,9 @@ exports.update = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            log.error("num:")
+            log.error(num)
+            if (num === 1) {
                 res.send({
                     message: "Reminder was updated successfully."
                 });
@@ -180,7 +184,7 @@ exports.delete = (req, res) => {
         where: { id: id }
     })
         .then(num => {
-            if (num == 1) {
+            if (num === 1) {
                 res.send({
                     message: "Appointment Reminder was deleted successfully!"
                 });
