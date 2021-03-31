@@ -21,25 +21,6 @@ verifyTokenWhitelist = (req, res, next) => {
         if (err) {
             return res.status(401).send({message: "Unauthorized!"});
         }
-
-        Token.findOne({ where: {'token': token} })
-            .then(token => {
-                if (!token) {
-                    return res.status(401).json({
-                        message: "Unauthorized!"
-                    });
-                }
-
-                req.params.tokenId = decoded.id
-
-                next();
-
-            })
-            .catch(error => {
-                res.status(500).send({
-                    message: error.message || "An error occurred while checking whitelist!"
-                });
-            });
     })
 };
 //----------------------------------------------------------------------------------------------------------------------

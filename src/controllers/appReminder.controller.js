@@ -1,12 +1,12 @@
 const db = require("../models");
-const appReminder = db.AppReminder;
+const AppReminder = db.appreminder;
 const Op = db.Sequelize.Op;
 
 // Create and Save a new appReminder
 exports.create = (req, res) => {
 
     // console.log("Inside create reminder");
-    if (!req.body.start || !req.body.stop || !req.body.timeout || !req.body.reminderMsg ||!req.body.purpose || !req.body.patientId) {
+    if (!req.body.start || !req.body.stop || !req.body.timeout || !req.body.reminder_msg ||!req.body.purpose || !req.body.patientId) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
         stop: req.body.stop,
         timeout: req.body.timeout,
         purpose: req.body.purpose,
-        reminderMsg:req.body.reminderMsg,
+        reminder_msg:req.body.reminder_msg,
         patientId:req.body.patientId
     };
 
@@ -109,7 +109,7 @@ exports.update = (req, res) => {
     console.log("Inside update a single reminder");
     const id = req.params.id;
     
-    if (!req.body.start || !req.body.stop || !req.body.timeout || !req.body.reminderMsg ||!req.body.purpose || !req.body.patientId) {
+    if (!req.body.start || !req.body.stop || !req.body.timeout || !req.body.reminder_msg ||!req.body.purpose || !req.body.patientId) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -121,7 +121,7 @@ exports.update = (req, res) => {
         stop: req.body.stop,
         timeout: req.body.timeout,
         purpose: req.body.purpose,
-        reminderMsg:req.body.reminderMsg,
+        reminder_msg:req.body.reminder_msg,
         patientId:req.body.patientId,
         cancelled:req.body.cancelled
     };

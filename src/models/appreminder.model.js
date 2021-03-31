@@ -2,6 +2,7 @@ module.exports = (sequelize, Sequelize) => {
     const AppReminder = sequelize.define("appReminder", {
       id: {
         type: Sequelize.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
         allowNull: false
       },  
@@ -31,7 +32,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
         defaultValue: 'You have an appointment soon...'
       },
-      patient_id: {
+      patientId: {
         type: Sequelize.INTEGER
       }
     },{
