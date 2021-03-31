@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new MedReminder
 exports.create = (req, res) => {
     // console.log("Inside create reminder");
-    if (!req.body.time || !req.body.brandName || !req.body.patientId) {
+    if (!req.body.time || !req.body.brandName || !req.body.timeout || !req.body.brandName || !req.body.verified || !req.body.reminderMsg || !req.body.patientId) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -75,10 +75,29 @@ exports.findOne = (req, res) => {
 
 // Update a medication reminder
 exports.update = (req, res) => {
+
     console.log("Inside update a single reminder");
+    
     const id = req.params.id;
 
-    MedReminder.update(req.body, {
+    if (!req.body.time || !req.body.brandName || !req.body.timeout || !req.body.brandName || !req.body.verified || !req.body.reminderMsg || !req.body.patientId) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
+
+    const medReminder = {
+        time: req.body.time,
+        timeout: req.body.timeout,
+        brandName: req.body.brandName,
+        genericName: req.body.genericName,
+        verified: req.body.verified,
+        reminderMsg: req.body.reminderMsg,
+        patientId: req.body.patientId
+    }
+
+    MedReminder.update(medReminder, {
         where: { id: id }
     })
         .then(num => {
