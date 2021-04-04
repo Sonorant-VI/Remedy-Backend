@@ -5,8 +5,7 @@ const Link =require("../controllers/link.controller");
 
 
 exports.findAll = (req, res) => {
-    console.log("We're inside the findAll user");
-    User.findAll()
+    User.findAll({attributes: ["uid", "email", "role"]})
         .then(data => {
             res.send(data);
         })
@@ -23,7 +22,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     console.log("We're inside the find one user");
     const id = req.params.id;
-    User.findByPk(id)
+    User.findByPk(id,{attributes: ["uid", "email", "role", "createdAt", "updatedAt"]})
         .then(data => {
             res.send(data);
         })

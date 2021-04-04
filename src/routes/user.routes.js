@@ -15,20 +15,20 @@ module.exports = userRouter => {
     });
 
 
-    // Return all the users
-    router.get("/",[authJWT.verifyTokenWhitelist],userController.findAll);
+    // Return all users
+    router.get("/",[authJWT.verifyToken],userController.findAll);
 
-    // Return a single user
-    router.get("/:id",[authJWT.verifyTokenWhitelist],userController.findOne);
+    // Return single user
+    router.get("/:id",[authJWT.verifyToken],userController.findOne);
 
-    // remove single user
-    router.delete("/:id",[authJWT.verifyTokenWhitelist],userController.delete); /*TODO remove all reminder and link in the other table before*/
+    // Remove single user
+    router.delete("/:id",[authJWT.verifyToken],userController.delete); /*TODO remove all reminder and link in the other table before*/
 
-    // ask request
-    router.post("/link/request",[authJWT.verifyTokenWhitelist],linkController.create);
+    // Request link
+    router.post("/link/request",[authJWT.verifyToken],linkController.create);
 
-    // accept request
-    router.patch("/link/validate",linkController.validate);
+    // Accept link request
+    router.patch("/link/validate", [authJWT.verifyToken], linkController.validate);
 
     // Return list of links => see read me
     router.get("/link/list/:id",linkController.findAll);

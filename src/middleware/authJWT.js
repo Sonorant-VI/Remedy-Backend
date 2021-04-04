@@ -5,7 +5,7 @@ const User = db.user
 const Token = db.token
 
 // Verify token in whitelist
-verifyTokenWhitelist = (req, res, next) => {
+verifyToken = (req, res, next) => {
 
     let token = req.headers["x-access-token"];
 
@@ -21,12 +21,13 @@ verifyTokenWhitelist = (req, res, next) => {
         if (err) {
             return res.status(401).send({message: "Unauthorized!"});
         }
+        next();
     })
 };
 //----------------------------------------------------------------------------------------------------------------------
 
 
 const authJwt = {
-    verifyTokenWhitelist: verifyTokenWhitelist,
+    verifyToken: verifyToken,
 };
 module.exports = authJwt;

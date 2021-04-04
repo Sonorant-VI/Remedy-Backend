@@ -22,7 +22,7 @@ module.exports = authenticationRouter => {
     router.post("/login", authenticationController.login);
 
     // Logout the user
-    router.post("/logout", [authJWT.verifyTokenWhitelist], authenticationController.logout);
+    router.post("/logout", [authJWT.verifyToken], authenticationController.logout);
 
     authenticationRouter.use('/api/auth', router);
 }

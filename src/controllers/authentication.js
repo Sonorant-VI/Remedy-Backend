@@ -18,7 +18,7 @@ exports.register = (req, res) => {
     }
 
     // Check role
-    if (req.body.role !== "active" || req.body.role !== "passive"){
+    if (req.body.role !== "active" && req.body.role !== "passive"){
         return res.status(400).json({message: "Role not valid!"});
     }
 
