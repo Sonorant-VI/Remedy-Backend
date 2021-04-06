@@ -105,13 +105,13 @@ exports.findOne = (req, res) => {
 
     const id = req.params.id;
 
-    Tutorial.findByPk(id)
+    linked.findByPk(id)
         .then(data => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message: "Error retrieving Tutorial with id=" + id
+                message: "Error retrieving link with id=" + id
             });
         });
 };
