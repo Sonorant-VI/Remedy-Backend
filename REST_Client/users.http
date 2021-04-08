@@ -1,4 +1,62 @@
+###error wrong role
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
 
+{
+  "email": "hello@gmail.com",
+  "password": "boo",
+  "role": "0"
+}
+
+
+###error wrong email   : should return a 400
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "hello.com",
+  "password": "boo",
+  "role": "active"
+}
+### good register active
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "hello@gmail.com",
+  "password": "boo",
+  "role": "active"
+}
+### wrong email already exist
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "hello@gmail.com",
+  "password": "boo",
+  "role": "active"
+}
+### good register passive
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "hello1@gmail.com",
+  "password": "boo",
+  "role": "passive"
+}
+###
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email":"test1@test.com",
+  "hashedpass":"password"
+
+}
+> {%
+ client.global.set("jwt", response.body.token);
+ %}
 
 ###
 GET {{baseUrl}}/api/user/
