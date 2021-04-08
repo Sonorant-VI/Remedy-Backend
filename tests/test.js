@@ -5,11 +5,13 @@ let server = require("../src/server.js");
 chai.use(chaiHttp);
 
 
+
 describe('/POST Register User', () => {
+    let r = Math.random().toString(36).substring(7);
+    let emailUser= r+'@gmail.com'
     it('Create User', (done) => {
-        let r = Math.random().toString(36).substring(7);
         let user = {
-            'email': r+'@gmail.com',
+            'email': emailUser,
             'password':'qwerty',
             'role':'active'
         }
