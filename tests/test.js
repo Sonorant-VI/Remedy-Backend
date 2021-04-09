@@ -1,31 +1,35 @@
 let chai = require("chai");
-let chaiHttp =require("chai-http");
+let chaiHttp = require("chai-http");
 let server = require("../src/server.js");
 
 chai.use(chaiHttp);
+var expect = chai.expect;
 
 
 // Authentication ------------------------------------------------------------------------------------------------------
 let r = Math.random().toString(36).substring(7);
-let emailUser= r+'@gmail.com'
-let emailUser2= r+'@hotmail.com'
+let emailUser = r + '@gmail.com';
+let emailUser2 = r + '@hotmail.com';
+let password = 'qwerty';
+
 let userID;
 let appReminderID;
+let token;
 
-describe('Authentication tests', () => {
-
-    it('Register User', (done) => {
+describe('Authentication tests',  () => {
+    //register
+    it('Register User', async (done) => {
         let user = {
             'email': emailUser,
-            'password':'qwerty',
+            'password':password,
             'role':'active'
         }
         chai.request(server)
             .post('/api/auth/register')
             .send(user)
             .end((err, res) => {
-                userID = res.body.uid
-                chai.expect(res.status).to.equal(400);
+                userID = res.body.uid;
+                chai.expect(res.status).to.equal(200);
             });
         done();
     });
@@ -61,7 +65,69 @@ describe('Authentication tests', () => {
             });
         done();
     });
+
+    //login
+    it('Login without email', (done) => {
+        let user = {
+            'email':'',
+            'password':'qwerty',
+        }
+        chai.request(server)
+            .post('/api/auth/login')
+            .send(user)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(400);
+            });
+        done();
+    });
+    it('Login without password', (done) => {
+        let user = {
+            'email':emailUser,
+            'password':'',
+        }
+        chai.request(server)
+            .post('/api/auth/login')
+            .send(user)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(400);
+            });
+        done();
+    });
+    it('Login correctly',  async (done) => {
+        let user = {
+            "email":'test1@test.com',
+            "password":'test'
+        }
+        chai.request(server)
+            .post('/api/auth/login')
+            .send(user)
+            .end((err, res) => {
+                token=res.body.jwt;
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });
+    //logout
+    /*  NOT WORKING  => trying to return the JWT token at the end but i couldn't
+     it('Logout correctly',  (done) => {
+        chai.request(server)
+            .get('/api/auth/logout')
+            .set('x-access-token',token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+            });
+
+        done();
+    });
+
+     */
 });
+
+
+// to  add a jwt into your request do :
+//                                         // we set the auth header with our token
+//                                         .set('Authorization', 'JWT ' + token)
+//                                         .end(function(error, resonse) {
 
 // AppReminder ---------------------------------------------------------------------------------------------------------
 /*describe('AppReminder tests', () => {

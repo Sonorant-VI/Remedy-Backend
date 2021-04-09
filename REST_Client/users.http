@@ -50,8 +50,8 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email":"test1@test.com",
-  "hashedpass":"password"
+  "email":"zhsfq@gmail.com",
+  "password":"qwerty"
 
 }
 > {%
