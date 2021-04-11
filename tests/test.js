@@ -14,6 +14,7 @@ let password = 'qwerty';
 
 let userID;
 let appReminderID;
+let medReminderID;
 let token;
 
 describe('Authentication tests',  () => {
@@ -202,3 +203,146 @@ describe('Authentication tests',  () => {
     });
 
 });*/
+
+// MedReminder ---------------------------------------------------------------------------------------------------------
+describe('MedReminder tests', () => {
+
+    // Create a new medication reminder
+    it('Create MedReminder', (done) => {
+        let medReminder = {
+            "time": '2021-12-01 12:00:00',
+            "timeout": 10,
+            "brandName": "Astra Zeneca",
+            "genericName": "generic",
+            "verified":"0",
+            "reminderMsg": "Take medication soon",
+            "patientId": 1
+        }
+        chai.request(server)
+            .post(`/api/medReminder/`)
+            .send(medReminder)
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                medReminderID = res.body.id
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });
+    it('Create MedReminder without user ID', (done) => {
+        let medReminder = {
+            "time": '2021-12-01 12:00:00',
+            "timeout": 10,
+            "brandName": "BRAND",
+            "genericName": "GENERIC",
+            "verified":"0",
+            "reminderMsg": "Take medication soon"
+        }
+        chai.request(server)
+            .post(`/api/medReminder/`)
+            .send(medReminder)
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                medReminderID = res.body.id
+                chai.expect(res.status).to.equal(400);
+            });
+        done();
+    });
+    it('Create MedReminder with incorrect date-time formatting', (done) => {
+        let medReminder = {
+            "time": '15:30 10/03/2021',
+            "timeout": 10,
+            "brandName": "BRAND",
+            "genericName": "GENERIC",
+            "verified":"0",
+            "reminderMsg": "Take medication soon"
+        }
+        chai.request(server)
+            .post(`/api/medReminder/`)
+            .send(medReminder)
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                medReminderID = res.body.id
+                chai.expect(res.status).to.equal(400);
+            });
+        done();
+    });
+    
+
+
+    it('Return all MedReminders', (done) => {
+        chai.request(server)
+            .get(`/api/medReminder/${userID}`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+                chai.expect(res.body).should.be.a('array');
+            });
+        done();
+    });
+
+    // Return a single medication reminder
+    it('Return MedReminder', (done) => {
+        chai.request(server)
+            .get(`/api/medReminder/${userID}/${medReminderID}`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });
+    it('Return MedReminder that does not exist', (done) => {
+        chai.request(server)
+            .get(`/api/medReminder/${userID}/0`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(400);
+            });
+        done();
+    });
+
+    // Update a medication reminder ||| NOT WORKING |||
+    /*it('Update AppReminder', (done) => {
+        let medReminder = {
+            "time": '2021-12-01 12:00:00',
+            "timeout": 10,
+            "brandName": "some brand",
+            "genericName": "generic",
+            "verified":"0",
+            "reminderMsg": "Take medication soon",
+            "patientId": userID
+        }
+        chai.request(server)
+            .patch(`/api/appReminder/${medReminderID}`)
+            .send(medReminder)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });*/
+
+    // Delete a medication reminder
+    it('Delete MedReminder', (done) => {
+        chai.request(server)
+            .delete(`/api/medReminder/${medReminderID}`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });
+    it('Delete MedReminder that does not exist', (done) => {
+        chai.request(server)
+            .delete(`/api/medReminder/0`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(400);
+            });
+        done();
+    });
+
+});
