@@ -17,6 +17,9 @@ let appReminderID;
 let medReminderID;
 let token;
 
+let linkerID;
+let linkedID;
+
 describe('Authentication tests',  () => {
     //register
     it('Register User', async (done) => {
@@ -344,5 +347,58 @@ describe('MedReminder tests', () => {
             });
         done();
     });
+
+});
+
+// Links -------------------------------------------------------------------------------------------------------------
+describe('Linking accounts tests', () => {
+
+    // Requesting an account to be linked 
+
+    // TODO:    Request, accept link test
+    //          Return the list of links 
+    //          Delete a link    
+
+    /*it('Request a link', (done) => {
+        let links = {
+            "uid_linked": 1,
+            "uid_linker": 2,
+            "verified": "false"
+        }
+        chai.request(server)
+            .post('/api/link/request')
+            .send(links)
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                linked = res.body.uid_linked;
+                linker = res.body.uid_linker;
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });*/
+
+    it('Return the list of all links', (done) => {
+        chai.request(server)
+            .get(`/api/link/list/${userID}`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+                chai.expect(res.body).should.be.a('array');
+            });
+        done();
+    });
+
+    /*
+    it('Delete a link', (done) => {
+        chai.request(server)
+            .delete(`/api/link/remove`)
+            .send()
+            .set('Authorization', 'JWT ' + token)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });*/
 
 });
