@@ -1,6 +1,7 @@
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let server = require("../src/server.js");
+let auth =require("../src/controllers/authentication.js");
 
 chai.use(chaiHttp);
 var expect = chai.expect;
@@ -16,26 +17,41 @@ let userID;
 let appReminderID;
 let medReminderID;
 let token;
-
 let linkerID;
 let linkedID;
+function  createUser(){
+    let user = {
+        'email': emailUser,
+        'password':password,
+        'role':'active'
+    }
+    chai.request(server)
+        .post('/api/auth/register')
+        .send(user)
+        .end((err, res) => {
+            userID = res.body.uid;
+            chai.expect(res.status).to.equal(200);
+        });
+}
+function loginUser (){
+    let user = {
+        "email":emailUser,
+        "password":password
+    }
+    chai.request(server)
+        .post('/api/auth/login')
+        .send(user)
+        .end((err, res) => {
+            chai.expect(res.status).to.equal(200);
+            console.log(res.body.jwt);
+            return res.body.jwt;
+        });
+}
 
 describe('Authentication tests',  () => {
     //register
-    it('Register User', async (done) => {
-        let user = {
-            'email': emailUser,
-            'password':password,
-            'role':'active'
-        }
-        chai.request(server)
-            .post('/api/auth/register')
-            .send(user)
-            .end((err, res) => {
-                userID = res.body.uid;
-                chai.expect(res.status).to.equal(200);
-            });
-        done();
+    it('Register User',  async () => {
+       await createUser();
     });
 
     it('Register User wrong role ', (done) => {
@@ -97,20 +113,22 @@ describe('Authentication tests',  () => {
             });
         done();
     });
-    it('Login correctly',  async (done) => {
+
+    it('Login correctly',  () => {
         let user = {
-            "email":'test1@test.com',
-            "password":'test'
+            "email":emailUser,
+            "password":password
         }
         chai.request(server)
             .post('/api/auth/login')
             .send(user)
             .end((err, res) => {
-                token=res.body.jwt;
+                console.log(res.body);
                 chai.expect(res.status).to.equal(200);
+                return res.body.jwt;
             });
-        done();
     });
+
     //logout
     /*  NOT WORKING  => trying to return the JWT token at the end but i couldn't
      it('Logout correctly',  (done) => {
