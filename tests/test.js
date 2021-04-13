@@ -324,8 +324,8 @@ describe('MedReminder tests', () => {
         done();
     });
 
-    // Update a medication reminder ||| NOT WORKING |||
-    /*it('Update AppReminder', (done) => {
+    // Update a medication reminder
+    it('Update MedReminder', (done) => {
         let medReminder = {
             "time": '2021-12-01 12:00:00',
             "timeout": 10,
@@ -333,16 +333,16 @@ describe('MedReminder tests', () => {
             "genericName": "generic",
             "verified":"0",
             "reminderMsg": "Take medication soon",
-            "patientId": userID
+            "patientId": 1
         }
         chai.request(server)
-            .patch(`/api/appReminder/${medReminderID}`)
+            .patch(`/api/medReminder/${medReminderID}`)
             .send(medReminder)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(200);
             });
         done();
-    });*/
+    });
 
     // Delete a medication reminder
     it('Delete MedReminder', (done) => {
@@ -395,7 +395,7 @@ describe('Linking accounts tests', () => {
         done();
     });*/
 
-    it('Return the list of all links', (done) => {
+    /*it('Return the list of all links', (done) => {
         chai.request(server)
             .get(`/api/link/list/${userID}`)
             .send()
@@ -405,7 +405,7 @@ describe('Linking accounts tests', () => {
                 chai.expect(res.body).should.be.a('array');
             });
         done();
-    });
+    });*/
 
     /*
     it('Delete a link', (done) => {

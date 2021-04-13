@@ -80,7 +80,7 @@ exports.update = (req, res) => {
     
     const id = req.params.id;
 
-    if (!req.body.time || !req.body.brandName || !req.body.timeout || !req.body.brandName || !req.body.verified || !req.body.reminderMsg || !req.body.patientId) {
+    if (!req.body.time || !req.body.brandName || !req.body.timeout || !req.body.genericName || !req.body.verified || !req.body.reminderMsg || !req.body.patientId) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
