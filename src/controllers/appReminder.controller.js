@@ -108,15 +108,26 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
 
     console.log("Inside update a single reminder");
+    console.log(typeof(req.body.start));
+    const id = req.params.id; 
 
-    const id = req.params.id;
-    
     if (!req.body.start || !req.body.stop || !req.body.timeout || !req.body.reminder_msg ||!req.body.purpose || !req.body.patientId) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
         return;
     }
+
+    // Ensure correct typing for reminders
+    // NOTE: This can probably be handled better on the front end
+    /*if (typeof(req.body.start)!= 'string' || typeof(req.body.stop != 'string')){
+        res.status(400).send({
+            message: "Incorrect type"
+        });
+        return
+    }*/
+
+
 
     const appReminder = {
         start: req.body.start,

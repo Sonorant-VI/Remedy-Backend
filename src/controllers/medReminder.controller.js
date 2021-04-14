@@ -86,6 +86,7 @@ exports.update = (req, res) => {
         });
         return;
     }
+    
 
     const medReminder = {
         time: req.body.time,

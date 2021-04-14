@@ -152,7 +152,7 @@ describe('Authentication tests',  () => {
 //                                         .end(function(error, resonse) {
 
 // AppReminder ---------------------------------------------------------------------------------------------------------
-/*describe('AppReminder tests', () => {
+describe('AppReminder tests', () => {
 
     it('Create AppReminder', (done) => {
         let appReminder = {
@@ -161,7 +161,7 @@ describe('Authentication tests',  () => {
             "timeout": 123,
             "purpose": "test purpose",
             "reminder_msg":"test message",
-            "patientId": userID
+            "patientId": 1
         }
         chai.request(server)
             .post(`/api/appReminder/`)
@@ -196,19 +196,35 @@ describe('Authentication tests',  () => {
 
     it('Update AppReminder', (done) => {
         let appReminder = {
-            "start": 123,
-            "stop": 456,
+            "start": '2021-02-04 15:00:00',
+            "stop": '2021-02-04 15:35:00',
             "timeout": 123,
             "purpose": "test purpose",
             "reminder_msg":"test message",
-            "patientId": userID,
-            "cancelled": 1
+            "patientId": 1,
+            "cancelled": "0"
         }
         chai.request(server)
             .patch(`/api/appReminder/${appReminderID}`)
-            .send()
+            .send(appReminder)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(200);
+            });
+        done();
+    });
+    it('Update AppReminder with no times', (done) => {
+        let appReminder = {
+            "timeout": 123,
+            "purpose": "test purpose",
+            "reminder_msg":"test message",
+            "patientId": 1,
+            "cancelled": "0"
+        }
+        chai.request(server)
+            .patch(`/api/appReminder/${appReminderID}`)
+            .send(appReminder)
+            .end((err, res) => {
+                chai.expect(res.status).to.equal(400);
             });
         done();
     });
@@ -223,7 +239,7 @@ describe('Authentication tests',  () => {
         done();
     });
 
-});*/
+});
 
 // MedReminder ---------------------------------------------------------------------------------------------------------
 describe('MedReminder tests', () => {
