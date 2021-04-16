@@ -35,17 +35,25 @@ verifyToken = (req, res, next) => {
 verifyPermission = (req, res, next) => {
 
     // For themself
-    if (req.params.tokenId === req.params.id){
+    if (req.params.tokenId === req.body.patientId){
+        console.log("same")
         next();
     }
 
     // For other user
-    Linked.findOne({where: {uid_linker: req.params.tokenId, uid_linked: req.params.id, verified: 1}})
+    Linked.findOne({where: {uid_linker: req.params.tokenId, uid_linked: req.body.patientId, verified: true}})
         .then(data => {
-            res.send(data);
+            if (data){
+                next();
+            }
+            else {
+                return res.status(400).send({
+                    message: "Not allowed"
+                });
+            }
         })
         .catch(err => {
-            res.status(500).send({
+            return res.status(500).send({
                 message: err
             });
         });
@@ -55,5 +63,6 @@ verifyPermission = (req, res, next) => {
 
 const authJwt = {
     verifyToken: verifyToken,
+    verifyPermission: verifyPermission,
 };
 module.exports = authJwt;
