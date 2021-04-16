@@ -33,57 +33,31 @@ exports.create = (req, res) => {
 };
 
 exports.validate = (req, res) => {
-    if (req.body.verified == "true") {
-        linked.update(
-            {verified: "true"},
-            {
-                where: {
-                    uid_linked: req.body.uid_linked,
-                    uid_linker: req.body.uid_linker
-                }
-            }
-        ).then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "link accepted successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update link!`
-                });
-            }
-        }).catch(err => {
-            res.status(500).send({
-                message: "Error updating link"
-            });
-        });
-    } else {
-        linked.update(
-            {verified: "false"},
-            {
-                where: {
-                    uid_linked: req.body.uid_linked,
-                    uid_linker: req.body.uid_linker
-                }
-            }
-        ).then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "link refused  successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update link!`
-                });
-            }
-        }).catch(err => {
-            res.status(500).send({
-                message: "Error updating link"
-            });
-        });
 
-    }
-    ;
+    linked.update(
+        {verified: "true"},
+        {
+            where: {
+                uid_linked: req.body.uid_linked,
+                uid_linker: req.body.uid_linker
+            }
+        }
+    ).then(num => {
+        if (num) {
+            res.send({
+                message: "link accepted successfully."
+            });
+        } else {
+            res.send({
+                message: `Cannot update link!`
+            });
+        }
+    }).catch(err => {
+        res.status(500).send({
+            message: "Error updating link"
+        });
+    });
+
 }
 
 exports.findAll = (req, res) => {
@@ -126,7 +100,7 @@ exports.delete = (req, res) => {
         }
     })
         .then(num => {
-            if (num == 1) {
+            if (num) {
                 res.send({
                     message: "link was deleted successfully!"
                 });

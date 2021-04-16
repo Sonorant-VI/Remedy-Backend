@@ -40,6 +40,7 @@ server.use(bodyParser.urlencoded({ extended: true }));
 //require("./routes/server.routes")(server);
 require("./routes/auth.routes")(server);
 require("./routes/user.routes")(server);
+require("./routes/link.routes")(server);
 require("./routes/medReminder.routes")(server);
 require("./routes/appReminder.routes")(server);
 
