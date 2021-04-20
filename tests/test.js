@@ -357,7 +357,7 @@ describe('MedReminder tests', () => {
             .send()
             .set('x-access-token', token)
             .end((err, res) => {
-                chai.expect(res.status).to.equal(200);
+                chai.expect(res.status).to.equal(400);
             });
         done();
     });
