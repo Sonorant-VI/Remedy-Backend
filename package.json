@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend service for the Remedy app.",
   "main": "./src/server.js",
+  "start": "./src/server.js",
   "scripts": {
     "test": "mocha tests/test.js"
   },
