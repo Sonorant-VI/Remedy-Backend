@@ -241,7 +241,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .post(`/api/medReminder/`)
             .send(medReminder)
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 //medReminderID = res.body.id
                 chai.expect(res.status).to.equal(200);
@@ -260,7 +260,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .post(`/api/medReminder/`)
             .send(medReminder)
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(400);
             });
@@ -278,7 +278,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .post(`/api/medReminder/`)
             .send(medReminder)
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(400);
             });
@@ -290,7 +290,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .get(`/api/medReminder/${userID}`)
             .send()
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(200);
                 chai.expect(res.body).should.be.a('array');
@@ -303,7 +303,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .get(`/api/medReminder/${userID}/${medReminderID}`)
             .send()
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(200);
             });
@@ -313,7 +313,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .get(`/api/medReminder/${userID}/0`)
             .send()
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(200);
             });
@@ -355,7 +355,7 @@ describe('MedReminder tests', () => {
         chai.request(server)
             .delete(`/api/medReminder/0`)
             .send()
-            .set('x-access-token', token)
+            .set('token', token)
             .end((err, res) => {
                 chai.expect(res.status).to.equal(400);
             });

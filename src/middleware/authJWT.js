@@ -8,7 +8,7 @@ const Linked = db.linked;
 // Verify token in whitelist
 verifyToken = (req, res, next) => {
 
-    let token = req.headers["x-access-token"];
+    let token = req.headers["token"];
 
     // check token existence
     if (!token) {

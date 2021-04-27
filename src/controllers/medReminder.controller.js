@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new MedReminder
 exports.create = (req, res) => {
     // console.log("Inside create reminder");
-    if (!req.body.time || !req.body.brandName || !req.body.timeout || !req.body.brandName || !req.body.patientId) {
+    if (!req.body.time || !req.body.brandName || !req.body.genericName || !req.body.patientId) {
         res.status(400).send({
             message: "Content can not be empty!"
         });
@@ -14,7 +14,7 @@ exports.create = (req, res) => {
 
     const medReminder = {
         time: req.body.time,
-        timeout: req.body.timeout,
+        timeout: 10,
         brandName: req.body.brandName,
         genericName:req.body.genericName,
         verified:"0",
