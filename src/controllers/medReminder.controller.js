@@ -18,8 +18,8 @@ exports.create = (req, res) => {
         brandName: req.body.brandName,
         genericName:req.body.genericName,
         verified:"0",
-        reminderMsg:"Take medication soon...",
-        patientId:req.body.patientId
+        reminderMsg: req.body.reminderMsg,
+        patientId: req.body.patientId
     };
 
     console.log("Contents of body have been stored");

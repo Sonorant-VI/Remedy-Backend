@@ -21,7 +21,7 @@ module.exports = medReminderRouter => {
     router.get("/:uid/:id", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.findOne);
 
     // create a medReminder
-    router.post("/", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.create);
+    router.post("/", [authJWT.verifyToken, authJWT.verifyPermission], medReminderController.create);
 
     // update medReminder
     router.patch("/:id", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.update);

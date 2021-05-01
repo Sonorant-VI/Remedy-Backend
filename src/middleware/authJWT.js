@@ -33,30 +33,32 @@ verifyToken = (req, res, next) => {
 
 // Verify permission
 verifyPermission = (req, res, next) => {
+    console.log("here")
 
     // For themself
     if (req.params.tokenId === req.body.patientId){
         console.log("same")
         next();
     }
-
-    // For other user
-    Linked.findOne({where: {uid_linker: req.params.tokenId, uid_linked: req.body.patientId, verified: true}})
-        .then(data => {
-            if (data){
-                next();
-            }
-            else {
-                return res.status(400).send({
-                    message: "Not allowed"
+    else {
+        // For other user
+        Linked.findOne({where: {uid_linker: req.params.tokenId, uid_linked: req.body.patientId, verified: true}})
+            .then(data => {
+                if (data){
+                    next();
+                }
+                else {
+                    return res.status(400).send({
+                        message: "Not allowed"
+                    });
+                }
+            })
+            .catch(err => {
+                return res.status(500).send({
+                    message: err
                 });
-            }
-        })
-        .catch(err => {
-            return res.status(500).send({
-                message: err
             });
-        });
+    }
 };
 //----------------------------------------------------------------------------------------------------------------------
 
