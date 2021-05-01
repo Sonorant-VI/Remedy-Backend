@@ -15,19 +15,19 @@ module.exports = medReminderRouter => {
 
 
     // return all the medReminders for a single user
-    router.get("/:uid", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.findAll);
+    router.get("/:uid", [authJWT.verifyToken, authJWT.verifyPermission], medReminderController.findAll);
 
     // return a single medReminder
-    router.get("/:uid/:id", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.findOne);
+    router.get("/:uid/:id", [authJWT.verifyToken, authJWT.verifyPermission], medReminderController.findOne);
 
     // create a medReminder
     router.post("/", [authJWT.verifyToken, authJWT.verifyPermission], medReminderController.create);
 
     // update medReminder
-    router.patch("/:id", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.update);
+    router.patch("/:id", [authJWT.verifyToken, authJWT.verifyPermission], medReminderController.update);
 
     // remove medReminder
-    router.delete("/:id", [authJWT.verifyToken/*, authJWT.verifyPermission*/], medReminderController.delete);
+    router.delete("/:id", [authJWT.verifyToken, authJWT.verifyPermission], medReminderController.delete);
 
     medReminderRouter.use('/api/medReminder', router);
 }
